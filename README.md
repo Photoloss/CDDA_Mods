@@ -1,4 +1,4 @@
-# CDDA_Mods
+# C:DDA Mods
 My own mods for Cataclysm: Dark Days Ahead. May be WIP, imbalanced or outdated.
 
 # Currently WIP: Elemental Mutations

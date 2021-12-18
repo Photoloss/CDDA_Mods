@@ -1,0 +1,513 @@
+[
+  {
+    "type": "mutation_category",
+    "id": "PS_ELEC",
+    "name": "Electric",
+    "threshold_mut": "THRESH_PS_ELEC",
+    "mutagen_message": "You recharge your inner battery.",
+    "iv_message": "You inject some electrolytes into your cells.",
+    "memorial_message": "Charged Up."
+  },
+  {
+    "id": "ps_mutagen_elec",
+    "copy-from": "mutagen_flavor",
+    "type": "COMESTIBLE",
+    "name": { "str_sp": "electric mutagen" },
+    "description": "A mutagenic substance humming with electric power.",
+    "price": 500000,
+    "color": "cyan",
+    "use_action": { "type": "mutagen", "mutation_category": "PS_ELEC" }
+  },
+  {
+    "id": "ps_iv_mutagen_elec",
+    "copy-from": "iv_mutagen_flavor",
+    "type": "COMESTIBLE",
+    "name": { "str_sp": "electric serum" },
+    "description": "A super-concentrated mutagen crackling with electric arcs.  You need a syringe to inject it… if you really want to?",
+    "price": 1000000,
+    "color": "cyan",
+    "healthy": -4,
+    "use_action": { "type": "mutagen_iv", "mutation_category": "PS_ELEC" }
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "ps_mutagen_elec",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "skills_required": [ "firstaid", 1 ],
+    "difficulty": 7,
+    "time": "45 m",
+    "batch_time_factors": [ 80, 20 ],
+    "book_learn": [ [ "recipe_creepy", 6 ] ],
+    "using": [ [ "mutagen_production_standard", 25 ] ],
+    "tools": [ [ [ "multimeter", 10 ], [ "voltmeter", 10 ] ] ],
+    "components": [ [ [ "mutagen", 1 ] ], [ [ "light_battery_cell", 1 ], [ "light_plus_battery_cell", 1 ], [ "light_disposable_cell", 1 ], [ "medium_battery_cell", 1 ], [ "medium_plus_battery_cell", 1 ], [ "medium_disposable_cell", 1 ], [ "battery_motorbike_small", 1 ], [ "small_storage_battery", 1 ] ], [ [ "ammonia", 1 ], [ "lye_powder", 100 ] ] ],
+    "flags": [ "SECRET" ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "ps_iv_mutagen_elec",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "skills_required": [ "firstaid", 3 ],
+    "difficulty": 7,
+    "time": "2 h",
+    "batch_time_factors": [ 20, 5 ],
+    "book_learn": [ [ "recipe_serum", 6 ], [ "recipe_creepy", 6 ] ],
+    "using": [ [ "serum_production_standard", 37 ] ],
+    "tools": [ [ [ "multimeter", 20 ], [ "voltmeter", 20 ] ] ],
+    "components": [ [ [ "ps_mutagen_elec", 2 ] ] ],
+    "flags": [ "SECRET" ]
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You dream of batteries, motors and circuits.",
+      "Your dreams leave your hair standing on end."
+    ],
+    "category": "PS_ELEC",
+    "strength": 1
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You have a strange dream about holding a glowing lightbulb in your hand.",
+      "While dreaming you see yourself darting along cables and wires."
+    ],
+    "category": "PS_ELEC",
+    "strength": 2
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You have a disturbing dream about short-circuiting in a bathtub.",
+      "You briefly open your eyes and see sparks in the corners of your vision."
+    ],
+    "category": "PS_ELEC",
+    "strength": 3
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "Even the undead will know fear of God, or stand powerless before you!",
+      "Just one more step to UNLIMITED POWER!"
+    ],
+    "category": "PS_ELEC",
+    "strength": 4
+  },
+  {
+    "type": "mutation",
+    "id": "THRESH_PS_ELEC",
+    "name": { "str": "Galvanic" },
+    "points": 1,
+    "description": "Electricity is powerful but fleeting, a flash in the dark. Your form will grant it persistence in these dark days.",
+    "valid": false,
+    "purifiable": false,
+    "threshold": true
+  },
+  {
+    "type": "mutation",
+    "id": "PS_CHARGED1",
+    "name": { "str": "Charged Skin" },
+    "points": 2,
+    "description": "Your skin is charged with static electricity. Enemies receive a weak zap when they strike you, but being wet is unpleasant.",
+    "changes_to": [ "PS_CHARGED2" ],
+    "category": [ "PS_ELEC" ],
+    "types": [ "SKIN" ],
+    "mixed_effect": true,
+	"enchantments": [ { "condition": "ALWAYS", "hit_me_effect": [ { "id": "ps_mut_elec_zap", "min_level": 1 } ] } ],
+    "wet_protection": [
+      { "part": "head", "good": -2 },
+      { "part": "leg_l", "good": -4 },
+      { "part": "leg_r", "good": -4 },
+      { "part": "foot_l", "good": -5 },
+      { "part": "foot_r", "good": -5 },
+      { "part": "arm_l", "good": -3 },
+      { "part": "arm_r", "good": -3 },
+      { "part": "hand_l", "good": -2 },
+      { "part": "hand_r", "good": -2 },
+      { "part": "torso", "good": -4 }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PS_CHARGED2",
+    "name": { "str": "Crackling Skin" },
+    "points": 4,
+    "description": "You occasionally arc electricity to nearby objects. Enemies receive a zap when they strike you, but being wet hurts a little.",
+    "prereqs": [ "PS_CHARGED1" ],
+    "prereqs2": [ "PS_GROUNDED1" ],
+    "changes_to": [ "PS_CHARGED3" ],
+    "category": [ "PS_ELEC" ],
+    "types": [ "SKIN" ],
+    "valid": false,
+    "mixed_effect": true,
+	"//1": "This needs some kind of off switch for sleeping so it can hurt while awake.",
+	"//2": "Manual control turns it into a weaker shock blast though, too easy to escape the downsides of electricity fields if you can switch them off.",
+	"enchantments": [ { "condition": "ALWAYS", "hit_me_effect": [ { "id": "ps_mut_elec_zap", "min_level": 2 } ], "emitter": "ps_mut_elec_arc1" } ],
+	"weakness_to_water": 1,
+    "wet_protection": [
+      { "part": "head", "good": -4 },
+      { "part": "leg_l", "good": -7 },
+      { "part": "leg_r", "good": -7 },
+      { "part": "foot_l", "good": -9 },
+      { "part": "foot_r", "good": -9 },
+      { "part": "arm_l", "good": -5 },
+      { "part": "arm_r", "good": -5 },
+      { "part": "hand_l", "good": -3 },
+      { "part": "hand_r", "good": -3 },
+      { "part": "torso", "good": -7 }
+    ]
+  },
+  {
+    "id": "ps_mut_elec_arc1",
+    "type": "emit",
+    "field": "fd_electricity",
+    "intensity": 3,
+    "chance": 20,
+    "qty": 1
+  },
+  {
+    "type": "mutation",
+    "id": "PS_CHARGED3",
+    "name": { "str": "Incandescent Skin" },
+    "points": 8,
+    "description": "You are constantly enveloped in a shroud of electric plasma. Enemies receive a strong zap when they strike you, but water will cause an agonising short circuit.",
+    "prereqs": [ "PS_CHARGED2" ],
+    "prereqs2": [ "PS_GROUNDED2" ],
+    "threshreq": [ "THRESH_PS_ELEC" ],
+    "category": [ "PS_ELEC" ],
+    "types": [ "SKIN" ],
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+	"enchantments": [ { "condition": "ALWAYS", "hit_me_effect": [ { "id": "ps_mut_elec_zap", "min_level": 3 } ], "emitter": "ps_mut_elec_arc2" } ],
+	"weakness_to_water": 4,
+    "wet_protection": [
+      { "part": "head", "good": -6 },
+      { "part": "leg_l", "good": -10 },
+      { "part": "leg_r", "good": -10 },
+      { "part": "foot_l", "good": -12 },
+      { "part": "foot_r", "good": -12 },
+      { "part": "arm_l", "good": -8 },
+      { "part": "arm_r", "good": -8 },
+      { "part": "hand_l", "good": -6 },
+      { "part": "hand_r", "good": -6 },
+      { "part": "torso", "good": -16 }
+    ]
+  },
+  {
+    "id": "ps_mut_elec_arc2",
+    "type": "emit",
+    "field": "fd_electricity",
+    "intensity": 10,
+    "qty": 9
+  },
+  {
+    "type": "SPELL",
+    "id": "ps_mut_elec_zap",
+    "name": "Electric Mutant Zapback",
+    "description": "The zapback effect from the electric mutation line.",
+    "message": "The %1$s gets zapped as it strikes you!",
+    "effect": "attack",
+	"//": "The visuals need some work.",
+    "shape": "line",
+    "flags": [ "NO_PROJECTILE" ],
+    "max_level": 3,
+    "min_damage": 2,
+    "max_damage": 8,
+    "damage_increment": 2.0,
+    "valid_targets": [ "hostile" ],
+    "damage_type": "electric",
+    "min_range": 1,
+    "max_range": 3,
+    "range_increment": 1
+  },
+  {
+    "type": "mutation",
+    "id": "PS_ZAP1",
+    "name": { "str": "Electrifying Touch" },
+    "points": 2,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "Your hands constantly accumulate electric charge. You need to take special care when crafting electronic devices, on the plus side striking an enemy with your bare hands occasionally delivers a painful electric shock.",
+    "changes_to": [ "PS_ZAP2" ],
+    "category": [ "PS_ELEC" ],
+    "types": [ "HANDS" ],
+    "encumbrance_covered": [ [ "hand_l", 3 ], [ "hand_r", 3 ] ],
+    "craft_skill_bonus": [ [ "electronics", -4 ] ],
+    "attacks": [
+      {
+        "attack_text_u": "You zap %s",
+        "attack_text_npc": "%1$s zaps %2$s",
+        "chance": 25,
+        "base_damage": { "damage_type": "electric", "amount": 2 }
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PS_ZAP2",
+    "name": { "str": "Shocking" },
+    "points": 4,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "The electricity in your hands is growing out of control. With careful focus you can discharge it at a nearby enemy.",
+    "prereqs": [ "PS_ZAP1" ],
+    "changes_to": [ "PS_ZAP3" ],
+    "category": [ "PS_ELEC" ],
+    "types": [ "HANDS" ],
+    "valid": false,
+    "active": true,
+    "cost": 40,
+    "hunger": true,
+    "fatigue": true,
+    "ranged_mutation": { "type": "ps_mut_elec_zap1", "message": "You discharge an electric arc." },
+    "encumbrance_covered": [ [ "hand_l", 5 ], [ "hand_r", 5 ] ],
+    "craft_skill_bonus": [ [ "electronics", -8 ] ],
+    "attacks": [
+      {
+        "attack_text_u": "You shock %s",
+        "attack_text_npc": "%1$s shocks %2$s",
+        "chance": 15,
+        "base_damage": { "damage_type": "electric", "amount": 4 }
+      }
+    ]
+  },
+  {
+    "id": "ps_mut_elec_zap1",
+    "type": "GUN",
+    "name": { "str_sp": "Hand Shock" },
+    "description": "this a pseudo item",
+    "volume": "1 L",
+    "price": 0,
+    "material": [ "flesh", "battery" ],
+    "symbol": "(",
+    "color": "cyan",
+    "skill": "throw",
+	"//": "Just a step up from a built-in tazer.",
+    "range": 2,
+    "ranged_damage": { "damage_type": "electric", "amount": 8 },
+    "dispersion": 1200,
+    "durability": 10,
+    "loudness": 20,
+    "recoil": 1600,
+    "ammo_effects": [ "SHOT", "NEVER_MISFIRES", "NO_PENETRATE_OBSTACLES", "ps_mut_elec_zapammo1" ],
+    "flags": [ "PSEUDO", "NEVER_JAMS", "TRADER_AVOID" ]
+  },
+  {
+    "id": "ps_mut_elec_zapammo1",
+    "type": "ammo_effect",
+    "aoe": { "field_type": "fd_electricity", "intensity_min": 2, "intensity_max": 6, "radius": 1 }
+  },
+  {
+    "type": "mutation",
+    "id": "PS_ZAP3",
+    "name": { "str": "Arc Casting" },
+    "points": 6,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "You have gained control over the electric power flowing through your hands and can direct lightning bolts at a moderate distance.",
+    "prereqs": [ "PS_ZAP2" ],
+    "threshreq": [ "THRESH_PS_ELEC" ],
+    "category": [ "PS_ELEC" ],
+    "types": [ "HANDS" ],
+    "valid": false,
+    "active": true,
+    "cost": 40,
+    "hunger": true,
+    "fatigue": true,
+    "ranged_mutation": { "type": "ps_mut_elec_zap2", "message": "You fire a powerful lightning bolt." },
+    "encumbrance_covered": [ [ "hand_l", 2 ], [ "hand_r", 2 ] ],
+    "craft_skill_bonus": [ [ "electronics", -2 ] ],
+    "attacks": [
+      {
+        "attack_text_u": "Electricity arcs from you to %s",
+        "attack_text_npc": "Electricity arcs from %1$s to %2$s",
+        "chance": 5,
+        "base_damage": { "damage_type": "electric", "amount": 8 }
+      }
+    ]
+  },
+  {
+    "id": "ps_mut_elec_zap2",
+    "type": "GUN",
+    "name": { "str_sp": "Arcing Bolt" },
+    "description": "this a pseudo item",
+    "volume": "1 L",
+    "price": 0,
+    "material": [ "flesh", "battery" ],
+    "symbol": "(",
+    "color": "cyan",
+    "skill": "throw",
+	"//": "Stats probably need more work.",
+    "range": 8,
+    "ranged_damage": { "damage_type": "electric", "amount": 8 },
+    "dispersion": 600,
+    "durability": 10,
+    "loudness": 30,
+    "recoil": 1600,
+    "ammo_effects": [ "SHOT", "NEVER_MISFIRES", "NO_PENETRATE_OBSTACLES", "ps_mut_elec_zapammo2" ],
+    "flags": [ "PSEUDO", "NEVER_JAMS", "TRADER_AVOID" ]
+  },
+  {
+    "id": "ps_mut_elec_zapammo2",
+    "type": "ammo_effect",
+    "aoe": { "field_type": "fd_electricity", "intensity_min": 6, "intensity_max": 10, "radius": 2 },
+    "trail": { "field_type": "fd_electricity", "intensity_min": 1, "intensity_max": 3 }
+  },
+  {
+    "type": "mutation",
+    "id": "PS_GROUNDED1",
+    "name": { "str": "Biocapacitance" },
+    "points": 3,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "Your cells naturally absorb and process electric currents, granting partial resistance to electric shocks.",
+	"//": "Weaker pre-thresh electric resistance, tune to negate dmg from CHARGED2 fields if sleeping cannot be fixed otherwise.",
+    "changes_to": [ "PS_GROUNDED2" ],
+    "category": [ "PS_ELEC" ],
+    "armor": [
+      {
+        "parts": [ "torso", "head", "arm_l", "arm_r", "hand_l", "hand_r", "leg_l", "leg_r", "foot_l", "foot_r", "mouth", "eyes" ],
+        "electric": 4
+      }
+    ]
+  },
+  {
+    "type": "mutation",
+    "id": "PS_GROUNDED2",
+    "name": { "str": "Superconducting" },
+    "points": 8,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "Your body acts as a living capacitor granting you complete immunity to the harmful effects of electricity.",
+    "prereqs": [ "PS_GROUNDED1" ],
+    "threshreq": [ "THRESH_PS_ELEC" ],
+    "category": [ "PS_ELEC" ],
+    "valid": false,
+    "purifiable": false,
+    "flags": [ "ELECTRIC_IMMUNE" ]
+  },
+  {
+    "type": "mutation",
+    "id": "PS_MAKEBATTERY",
+    "name": { "str": "Hand Charging" },
+    "points": 6,
+    "description": "By harnessing the electric power within your body you can charge batteries with your bare hands. This puts a lot of strain on your metabolism however.",
+    "prereqs": [ "PS_ZAP3" ],
+    "threshreq": [ "THRESH_PS_ELEC" ],
+    "category": [ "PS_ELEC" ],
+	"//": "Dirty hack for now, can't charge existing batteries via mutations. Maybe spells?",
+    "valid": false,
+    "active": true,
+    "cost": 100,
+    "hunger": true,
+    "thirst": true,
+    "fatigue": true,
+    "spawn_item": { "type": "battery", "message": "You liberate some electric charge from your body." }
+  },
+  {
+    "type": "mutation",
+    "id": "PS_QUICKSTAMINA",
+    "name": { "str": "Hyperventilation" },
+    "points": 1,
+    "visibility": 1,
+    "ugliness": 1,
+    "description": "You run out of breath very quickly, but also recover rapidly when given the opportunity.",
+    "category": [ "PS_ELEC" ],
+    "mixed_effect": true,
+	"//1": "This is supposed to be zero-sum in terms of raw stats.",
+	"//2": "max-1 automatically gets added to regen, hence compensating with higher regen number.",
+    "stamina_regen_modifier": 1.5,
+    "max_stamina_modifier": 0.5
+  },
+  {
+    "type": "mutation",
+    "id": "QUICK",
+    "copy-from": "QUICK",
+	"//": "An upside to excited nerves, faster actions.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "FLEET",
+    "copy-from": "FLEET",
+	"//": "More localised speed increase.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "JITTERY",
+    "copy-from": "JITTERY",
+	"//": "Random zaps can seriously mess with your coordination.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "CLUMSY",
+    "copy-from": "CLUMSY",
+	"//": "You get faster but not stealthier.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "MYOPIC",
+    "copy-from": "MYOPIC",
+	"//": "A poor approximation of constantly having electric arcs in your vision. Maybe change to PER reduction.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "WEAKSCENT",
+    "copy-from": "WEAKSCENT",
+	"//": "Living ozone generator.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "BADHEARING",
+    "copy-from": "BADHEARING",
+	"//": "Those constant zaps probably deteriorate your hearing over time.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "INSOMNIA",
+    "copy-from": "INSOMNIA",
+	"//": "Can't sleep while constantly receiving electric shocks.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "FLIMSY2",
+    "copy-from": "FLIMSY2",
+	"//": "All that power needs to come from somewhere, those mutated organs break easily.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "PAINRESIST",
+    "copy-from": "PAINRESIST",
+	"//": "Can't make a custom nerfed copy of NOPAIN in JSON. Maybe try a stat enchantment.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "ELECTRORECEPTORS",
+    "copy-from": "ELECTRORECEPTORS",
+	"//": "Probably quite OP with built-in electric immunity, but it fits nicely.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "FAST_REFLEXES",
+    "copy-from": "FAST_REFLEXES",
+	"//": "Another benefit of higher nerve performance.",
+    "extend": { "category": [ "PS_ELEC" ] }
+  }
+]

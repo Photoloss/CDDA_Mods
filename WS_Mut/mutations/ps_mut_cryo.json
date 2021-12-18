@@ -1,0 +1,459 @@
+[
+  {
+    "type": "mutation_category",
+    "id": "PS_CRYO",
+    "name": "Cryogenic",
+    "threshold_mut": "THRESH_PS_CRYO",
+    "mutagen_message": "You cool down.",
+    "iv_message": "Your veins feel like ice, and then go numb.",
+    "memorial_message": "Perfected self-preservation."
+  },
+  {
+    "id": "ps_mutagen_cryo",
+    "copy-from": "mutagen_flavor",
+    "type": "COMESTIBLE",
+    "name": { "str_sp": "cryogenic mutagen" },
+    "description": "A mutagenic substance which seems to drain the warmth from its surroundings.",
+    "price": 500000,
+    "color": "blue",
+    "use_action": { "type": "mutagen", "mutation_category": "PS_CRYO" },
+	"//": "Yup, this stuff actually cools itself.",
+    "emits": [ "ps_emit_mut_cryo1" ]
+  },
+  {
+    "id": "ps_emit_mut_cryo1",
+    "type": "emit",
+    "field": "fd_cold_air1",
+    "intensity": 2,
+    "chance": 5
+  },
+  {
+    "id": "ps_iv_mutagen_cryo",
+    "copy-from": "iv_mutagen_flavor",
+    "type": "COMESTIBLE",
+    "name": { "str_sp": "cryogenic serum" },
+    "description": "A super-concentrated mutagen, unbearably cold yet still liquid.  You need a syringe to inject it… if you really want to?",
+    "price": 1000000,
+    "color": "blue",
+    "healthy": -4,
+    "use_action": { "type": "mutagen_iv", "mutation_category": "PS_CRYO" },
+	"//": "Not sure how much of a concern serum-powered freezer rooms are with this.",
+    "emits": [ "ps_emit_mut_cryo2" ]
+  },
+  {
+    "id": "ps_emit_mut_cryo2",
+    "type": "emit",
+    "field": "fd_cold_air2",
+    "intensity": 2,
+    "chance": 5
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "ps_mutagen_cryo",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "skills_required": [ "firstaid", 1 ],
+    "difficulty": 7,
+    "time": "45 m",
+    "batch_time_factors": [ 80, 20 ],
+    "book_learn": [ [ "recipe_creepy", 6 ] ],
+    "using": [ [ "mutagen_production_standard", 25 ] ],
+    "tools": [ [ [ "minifreezer", -1 ], [ "mountable_cooler", -1 ] ] ],
+    "components": [ [ [ "mutagen", 1 ] ], [ [ "water_clean", 2 ], [ "water_mineral", 2 ], [ "water", 2 ] ], [ [ "ammonia", 1 ], [ "lye_powder", 100 ] ] ],
+    "flags": [ "SECRET" ]
+  },
+  {
+    "type": "recipe",
+    "activity_level": "LIGHT_EXERCISE",
+    "result": "ps_iv_mutagen_cryo",
+    "category": "CC_CHEM",
+    "subcategory": "CSC_CHEM_MUTAGEN",
+    "skill_used": "chemistry",
+    "skills_required": [ "firstaid", 3 ],
+    "difficulty": 7,
+    "time": "2 h",
+    "batch_time_factors": [ 20, 5 ],
+    "book_learn": [ [ "recipe_serum", 6 ], [ "recipe_creepy", 6 ] ],
+    "using": [ [ "serum_production_standard", 37 ] ],
+    "tools": [ [ [ "minifreezer", -1 ], [ "mountable_cooler", -1 ] ] ],
+    "components": [ [ [ "ps_mutagen_cryo", 2 ] ] ],
+    "flags": [ "SECRET" ]
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You dream of ice cream and other frozen treats.",
+      "Your dreams take you through a winter wonderland."
+    ],
+    "category": "PS_CRYO",
+    "strength": 1
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You have a strange dream about living in an ice age.",
+      "While dreaming you see nothing but pristine snow in every direction."
+    ],
+    "category": "PS_CRYO",
+    "strength": 2
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You briefly try to open your eyes, only to find them frozen shut.",
+      "You have a disturbing dream about being frozen in a block of ice."
+    ],
+    "category": "PS_CRYO",
+    "strength": 3
+  },
+  {
+    "type": "dream",
+    "messages": [
+      "You no longer dream. There is only cold.",
+      "You no longer dream. There is only ice."
+    ],
+    "category": "PS_CRYO",
+    "strength": 4
+  },
+  {
+    "type": "mutation",
+    "id": "THRESH_PS_CRYO",
+    "name": { "str": "Cryogenic" },
+    "points": 1,
+    "description": "Eternal life. Endless cold.",
+    "valid": false,
+    "purifiable": false,
+    "threshold": true
+  },
+  {
+    "type": "mutation",
+    "id": "PS_CRYOMETAB1",
+    "name": { "str": "Cooling Blood" },
+    "points": 0,
+    "description": "Your metabolism and healing have slowed down considerably, but you tire more slowly and wounds bleed a little less.",
+    "prereqs": [ "PS_COLD1" ],
+    "changes_to": [ "PS_CRYOMETAB2" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "METABOLISM" ],
+    "mixed_effect": true,
+    "bodytemp_modifiers": [ -500, 500 ],
+    "bodytemp_sleep": 500,
+    "fatigue_modifier": -0.15,
+    "thirst_modifier": -0.2,
+    "metabolism_modifier": -0.1,
+    "healing_resting": -0.1,
+    "mending_modifier": 0.9,
+	"bleed_resist": 1
+  },
+  {
+    "type": "mutation",
+    "id": "PS_CRYOMETAB2",
+    "name": { "str": "Icy Blood" },
+    "points": 1,
+    "description": "Your blood appears to be cooling your body now. Strangely despite the slower metabolism you appear to function better in the cold.",
+    "prereqs": [ "PS_CRYOMETAB1" ],
+    "prereqs2": [ "PS_COLD2" ],
+    "changes_to": [ "PS_CRYOMETAB3" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "METABOLISM" ],
+    "mixed_effect": true,
+    "bodytemp_modifiers": [ -1000, 1000 ],
+    "bodytemp_sleep": 1000,
+    "fatigue_modifier": -0.25,
+    "thirst_modifier": -0.4,
+    "metabolism_modifier": -0.25,
+    "healing_resting": -0.25,
+    "mending_modifier": 0.75,
+	"temperature_speed_modifier": -0.5,
+	"bleed_resist": 3
+  },
+  {
+    "type": "mutation",
+    "id": "PS_CRYOMETAB3",
+    "name": { "str": "Cryometabolism" },
+    "points": 2,
+    "description": "Liquid ice flows through your veins. The cold sustains you, but your metabolism and healing are very sluggish.",
+    "prereqs": [ "PS_CRYOMETAB2" ],
+    "prereqs2": [ "PS_ICESKIN1" ],
+    "threshreq": [ "THRESH_PS_CRYO" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "METABOLISM" ],
+    "mixed_effect": true,
+    "bodytemp_modifiers": [ -2000, 2000 ],
+    "bodytemp_sleep": 2000,
+    "fatigue_modifier": -0.5,
+    "fatigue_regen_modifier": 0.5,
+    "thirst_modifier": -0.66,
+    "metabolism_modifier": -0.5,
+    "healing_resting": -0.5,
+    "mending_modifier": 0.5,
+	"temperature_speed_modifier": -1,
+	"bleed_resist": 5,
+    "enchantments": [ { "condition": "ALWAYS", "values": [ { "value": "SPEED", "multiply": -0.05 } ] } ]
+  },
+  {
+    "type": "mutation",
+    "id": "PS_FROZENHEART",
+    "name": { "str": "Frozen Heart" },
+    "points": 1,
+    "description": "You feel nothing. No emotions. No pulse. No hunger. No thirst. But you keep going.",
+    "prereqs": [ "PS_ICESKIN2" ],
+    "prereqs2": [ "NUMB" ],
+    "threshreq": [ "THRESH_PS_CRYO" ],
+    "category": [ "PS_CRYO" ],
+    "mixed_effect": true,
+    "bodytemp_modifiers": [ -4000, 2000 ],
+    "bodytemp_sleep": 4000,
+    "thirst_modifier": -0.09,
+    "metabolism_modifier": -0.25,
+	"temperature_speed_modifier": -2,
+	"bleed_resist": 1000,
+    "flags": [ "COLD_IMMUNE", "CLIMATE_CONTROL" ],
+    "social_modifiers": { "persuade": -100, "lie": -100, "intimidate": -20 },
+    "enchantments": [ { "condition": "ALWAYS", "values": [ { "value": "SPEED", "multiply": -0.20 } ] } ]
+  },
+  {
+    "type": "mutation",
+    "id": "PS_ICESKIN1",
+    "name": { "str": "Rime Skin" },
+    "points": 2,
+    "description": "Icy crystals form on your skin absorbing most forms of damage. They do slightly slow your movement however.",
+    "prereqs": [ "ALBINO" ],
+    "prereqs2": [ "PS_CRYOMETAB2" ],
+    "changes_to": [ "PS_ICESKIN2" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "SKIN" ],
+    "wet_protection": [
+      { "part": "head", "ignored": 1 },
+      { "part": "leg_l", "ignored": 5 },
+      { "part": "leg_r", "ignored": 5 },
+      { "part": "foot_l", "ignored": 1 },
+      { "part": "foot_r", "ignored": 1 },
+      { "part": "arm_l", "ignored": 4 },
+      { "part": "arm_r", "ignored": 4 },
+      { "part": "hand_l", "ignored": 1 },
+      { "part": "hand_r", "ignored": 1 },
+      { "part": "torso", "ignored": 10 }
+    ],
+    "armor": [
+      {
+        "parts": [ "torso", "head", "arm_l", "arm_r", "hand_l", "hand_r", "leg_l", "leg_r", "foot_l", "foot_r", "mouth", "eyes" ],
+        "bash": 2,
+        "cut": 2,
+        "bullet": 1,
+        "acid": 1,
+        "heat": 1,
+        "cold": 4
+      }
+    ],
+    "movecost_modifier": 1.1
+  },
+  {
+    "type": "mutation",
+    "id": "PS_ICESKIN2",
+    "name": { "str": "Glacial" },
+    "points": 5,
+    "description": "Your body is encased in a shell of unnaturally sturdy ice. It's bulky and slows you down, but provides excellent protection",
+    "prereqs": [ "PS_ICESKIN1" ],
+    "prereqs2": [ "PS_CRYOMETAB3" ],
+    "threshreq": [ "THRESH_PS_CRYO" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "SKIN" ],
+    "wet_protection": [
+      { "part": "head", "ignored": 4 },
+      { "part": "leg_l", "ignored": 14 },
+      { "part": "leg_r", "ignored": 14 },
+      { "part": "foot_l", "ignored": 4 },
+      { "part": "foot_r", "ignored": 4 },
+      { "part": "arm_l", "ignored": 12 },
+      { "part": "arm_r", "ignored": 12 },
+      { "part": "hand_l", "ignored": 3 },
+      { "part": "hand_r", "ignored": 3 },
+      { "part": "torso", "ignored": 26 }
+    ],
+    "encumbrance_always": [
+      [ "torso", 10 ],
+      [ "head", 10 ],
+      [ "arm_l", 10 ],
+      [ "arm_r", 10 ],
+      [ "hand_l", 10 ],
+      [ "hand_r", 10 ],
+      [ "leg_l", 10 ],
+      [ "leg_r", 10 ],
+      [ "foot_l", 10 ],
+      [ "foot_r", 10 ]
+    ],
+    "armor": [
+      {
+        "parts": [ "torso", "head", "arm_l", "arm_r", "hand_l", "hand_r", "leg_l", "leg_r", "foot_l", "foot_r", "mouth", "eyes" ],
+        "bash": 8,
+        "cut": 8,
+        "bullet": 2,
+        "acid": 2,
+        "heat": 4,
+        "cold": 10
+      }
+    ],
+    "movecost_modifier": 1.3
+  },
+  {
+    "type": "mutation",
+    "id": "PS_COLD1",
+    "name": { "str": "Cold Shoulder" },
+    "points": 1,
+    "description": "You always feel a cold draft around your legs and sometimes an icy gust on your neck.",
+    "prereqs": [ "WEAKSCENT" ],
+    "changes_to": [ "PS_COLD2" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "SCENT" ],
+    "mixed_effect": true,
+	"enchantments": [ { "condition": "ALWAYS", "emitter": "ps_mut_cryo_gas1" } ]
+  },
+  {
+    "id": "ps_mut_cryo_gas1",
+    "type": "emit",
+    "field": "fd_cold_air1",
+    "intensity": 3,
+    "chance": 25,
+    "qty": 2
+  },
+  {
+    "type": "mutation",
+    "id": "PS_COLD2",
+    "name": { "str": "Frostwalker" },
+    "points": 2,
+    "description": "Frigid mist follows your every move and your footprints are frozen solid.",
+    "prereqs": [ "PS_COLD1" ],
+    "prereqs2": [ "PS_CRYOMETAB1" ],
+    "changes_to": [ "PS_COLD3" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "SCENT" ],
+    "valid": false,
+    "mixed_effect": true,
+	"//": "Need to make sure this doesn't kill you while sleeping.",
+	"enchantments": [ { "condition": "ALWAYS", "emitter": "ps_mut_cryo_gas2" } ]
+  },
+  {
+    "id": "ps_mut_cryo_gas2",
+    "type": "emit",
+    "field": "fd_cold_air2",
+    "intensity": 3,
+    "chance": 50,
+    "qty": 2
+  },
+  {
+    "type": "mutation",
+    "id": "PS_COLD3",
+    "name": { "str": "Permafrost" },
+    "points": 3,
+    "description": "You drain all heat from your surroundings, freezing anything before you even touch it.",
+    "prereqs": [ "PS_COLD2" ],
+    "prereqs2": [ "PS_CRYOMETAB2", "PS_CRYOMETAB3" ],
+    "threshreq": [ "THRESH_PS_CRYO" ],
+    "category": [ "PS_CRYO" ],
+    "types": [ "SCENT" ],
+    "valid": false,
+    "purifiable": false,
+    "mixed_effect": true,
+	"enchantments": [ { "condition": "ALWAYS", "emitter": "ps_mut_cryo_gas3" } ]
+  },
+  {
+    "id": "ps_mut_cryo_gas3",
+    "type": "emit",
+    "field": "fd_cold_air3",
+    "intensity": 3,
+    "qty": 6
+  },
+  {
+    "type": "mutation",
+    "id": "TOUGH",
+    "copy-from": "TOUGH",
+	"//": "Might minorly break starting trait balance.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "TOUGH2",
+    "copy-from": "TOUGH2",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "TOUGH3",
+    "copy-from": "TOUGH3",
+	"//": "Can't add threshreq and keep it selectable in chargen?",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "NOPAIN",
+    "copy-from": "NOPAIN",
+	"//": "prereq gain might be imba.",
+    "extend": { "category": [ "PS_CRYO" ], "threshreq": [ "THRESH_PS_CRYO" ], "prereqs2": [ "PS_CRYOMETAB3" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "ALBINO",
+    "copy-from": "ALBINO",
+	"//": "Leads to icy skin.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "NUMB",
+    "copy-from": "NUMB",
+	"//": "Hardcoded effect, cannot integrate into FROZENHEART.",
+    "extend": { "category": [ "PS_CRYO" ], "threshreq": [ "THRESH_PS_CRYO" ], "leads_to": ["PS_FROZENHEART"] }
+  },
+  {
+    "type": "mutation",
+    "id": "ROBUST",
+    "copy-from": "ROBUST",
+	"//": "Due to 'stability' theme.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "PSYCHOPATH",
+    "copy-from": "PSYCHOPATH",
+	"//": "Might break chargen options. Hardcoded morale effects.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "NARCOLEPTIC",
+    "copy-from": "NARCOLEPTIC",
+	"//": "Detachment, carelessness.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "HIBERNATE",
+    "copy-from": "HIBERNATE",
+	"//": "Needs some prereq testing.",
+    "extend": { "category": [ "PS_CRYO" ], "threshreq": [ "THRESH_PS_CRYO" ], "prereqs2": [ "PS_CRYOMETAB3" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "DISIMMUNE",
+    "copy-from": "DISIMMUNE",
+	"//": "Not sure how much these will conflict due to prereqs.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "INFIMMUNE",
+    "copy-from": "INFIMMUNE",
+	"//": "Not sure how much these will conflict due to prereqs.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  },
+  {
+    "type": "mutation",
+    "id": "PARAIMMUNE",
+    "copy-from": "PARAIMMUNE",
+	"//": "Not sure how much these will conflict due to prereqs.",
+    "extend": { "category": [ "PS_CRYO" ] }
+  }
+]

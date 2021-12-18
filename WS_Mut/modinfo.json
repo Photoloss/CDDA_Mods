@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "Ps_WS_Mut",
+    "name": "WIP Elemental Mutations",
+    "authors": [ "Photoloss" ],
+    "maintainers": [ "Photoloss" ],
+    "description": "Adds elemental and zombie-inspired mutation lines. Currently Electric and Cryogenic, very WIP.",
+    "category": "misc_additions",
+    "dependencies": [ "dda" ]
+  }
+]
